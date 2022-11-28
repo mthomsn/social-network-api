@@ -8,16 +8,19 @@ module.exports = {
   },
 
   getSingleUser(req, res) {
-    User.findOne({ _id: req.params.userId })
+    let { userId } = req.params;
+    console.log(userId);
+
+    User.findById(userId)
       .then((user) =>
         !user
-          ? res.status(404).json({ message: 'No post with that ID' })
-          : res.json(post)
+          ? res.status(404).json({ message: 'No user with that ID' })
+          : res.json(user)
       )
       .catch((err) => res.status(500).json(err));
   },
 
-  // create a new post
+  // create a new user
   createUser(req, res) {
     User.create(req.body)
       .then((dbUserData) => res.json(dbUserData))
